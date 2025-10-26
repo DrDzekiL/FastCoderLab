@@ -1,0 +1,23 @@
+{
+  "dist": ".\\dist",
+  "global_exclude_dirs": ["venv", "node_modules", ".git", "__pycache__", ".ipynb_checkpoints", "dist", "build"],
+  "global_exclude_files": ["*.tmp", "*.log", "*.bak", ".DS_Store", "Thumbs.db"],
+  "packages": [
+    {
+      "name": "ReleaseHygieneKit",
+      "source": ".\\kits\\ReleaseHygieneKit",
+      "output": "ReleaseHygieneKit_v0.1",
+      "exclude_dirs": [],
+      "exclude_files": [],
+      "max_file_mb": 100
+    },
+    {
+      "name": "OneClick_Scripts_EN",
+      "source": ".\\kits\\One-Click-Scripts_Starter_EN",
+      "output": "OneClick_Scripts_EN_v0.1",
+      "exclude_dirs": [],
+      "exclude_files": [],
+      "max_file_mb": 100
+    }
+  ]
+}
