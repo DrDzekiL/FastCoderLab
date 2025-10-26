@@ -1,0 +1,39 @@
+name: Release on tag
+
+on:
+  push:
+    tags: ['v*']          # запускается при пуше тега v0.1, v0.2, v1.0 и т.п.
+  workflow_dispatch: {}   # позволяет запустить вручную из вкладки Actions
+
+jobs:
+  build:
+    runs-on: windows-latest
+    permissions:
+      contents: write     # нужно, чтобы создавать релиз и загружать файлы
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Pack
+        shell: pwsh
+        run: pwsh -NoProfile -File .\PackAll.ps1 -Overwrite
+
+      - name: Read checksums
+        id: notes
+        shell: pwsh
+        run: |
+          $s = Get-Content .\dist\SHA256SUMS.txt -Raw
+          "notes<<EOF" | Out-File -Append -FilePath $env:GITHUB_OUTPUT
+          $s               | Out-File -Append -FilePath $env:GITHUB_OUTPUT
+          "EOF"            | Out-File -Append -FilePath $env:GITHUB_OUTPUT
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Vector Focus Kit ${{ github.ref_name }}
+          body: ${{ steps.notes.outputs.notes }}
+          files: |
+            dist/*.zip
+            dist/SHA256SUMS.txt
