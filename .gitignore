@@ -1,0 +1,10 @@
+dist/
+**/__pycache__/
+**/.ipynb_checkpoints/
+**/node_modules/
+**/venv/
+*.bak
+*.tmp
+*.log
+.DS_Store
+Thumbs.db
